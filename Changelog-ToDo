@@ -1,0 +1,72 @@
+#Changelog 
+# 01062017 added placeholders for Insights and OpenSCAP 
+#   Added visible markers for tasks 
+#   Added install of lynx and gnome-terminal 
+#   Added firewall port acknowledgment
+#   Added self documentation 
+#   TESTED Satellite HEADLESS AND GUI 01112017
+#   Added Ansible Tower installer 01132017
+# 01132017
+#   tested Ansible-Tower installer OEL 6.8, and RHEL 6.8, 7.3  
+#   Spelling corrections
+# 01182017
+#   Incorporated OpenSCAP into base install 
+#   Improved Sat installer only 3 stages 
+#   added Satellite summary
+#   Cleaned up Ansible Tower installer
+# 01202017
+#   Added Puppet modules
+#   Fixed Ansible tower url  
+#   Fixed hostgroup create
+# 01272017 
+#   Fixed tower download for rhel 6 to download 3.0 rather than the latest --Line  1245 - 1263
+#   Associate subnet to location Line 781 -806
+#   Associate media to location Line 781 -806
+#   Associate organization to location Line 781 -806
+#   Associate domain to location Line 781 -806
+#   removed line 1078 "sh /root/hostgroup_create.sh" not needed
+#   Fixed Function default to be as Sat sets it up -- line 968
+#   Added SUBNAME MEDID to line -- 773 - 774
+# 02152017 
+#   set up subnet dynamicly -- added read function at request of Roland Wolters 
+#   removed rhel-7-server-aus-satellite-tools-6.2-rpms rhel-7-server-eus-satellite-tools-6.2-rpms rhel-7-server-satellite-tools-6.2-rpms -- line 499
+#   if pulp is installed prior to the configuration stage the satellite installer finds a pulp.conf and fails moved sevtion below sat config 
+#   yum -q list installed katello-agent &>/dev/null && echo "katello-agent installed" || yum install -y katello-agent --skip-broken
+#   It seems corporate repos have changed for employee subscriptions and these may be unavailable to customers as well
+#   
+#   These repos if left in the statement on line 499 cause the install of sat 6.2.4  install to fail in the first stage
+
+#   ------------
+
+#   The section prior to configuring satellite I moved - line 596
+
+#   yum -q list installed tfm-rubygem-foreman_discovery &>/dev/null && echo "tfm-rubygem-foreman_discovery installed" || yum install -y *rubygem-foreman_discovery --skip-broken
+#   yum -q list installed foreman-discovery-image  &>/dev/null && echo "foreman-discovery-image installed"  || yum install -y foreman-discovery-image --skip-broken
+#   yum -q list installed rubygem-smart_proxy_discovery_image  &>/dev/null && echo "rubygem-smart_proxy_discovery_image installed"  || yum install -y rubygem-smart_proxy_discovery* --skip-broken
+#   yum -q list installed puppet-foreman_scap_client &>/dev/null && echo "puppet-foreman_scap_client installed" || yum install -y puppet-foreman_scap_client --skip-broken
+#   yum -q list installed rubygem-foreman_api &>/dev/null && echo "rubygem-foreman_api installed" || yum install -y rubygem-foreman_api --skip-broken
+#   yum -q list installed rubygem-foreman_scap_client &>/dev/null && echo "rubygem-foreman_scap_client installed" || yum install -y rubygem-foreman_scap_client --skip-broken
+#   yum -q list installed satellite-capsule &>/dev/null && echo "satellite-capsule installed" || yum install -y satellite-capsule --skip-broken
+#   yum -q list installed katello-agent &>/dev/null && echo "katello-agent installed" || yum install -y katello-agent --skip-broken
+#   yum -q list installed ruby193-rubygem-foreman_openscap &>/dev/null && echo "ruby193-rubygem-foreman_openscap installed" || yum install -y ruby193-rubygem-foreman_openscap --skip-broken
+
+#   Because if pulp is installed prior to the configuration there is a failure that pulp.conf already exists and it stops - line 596
+
+#   ---------------------------------------------------
+
+#   Pounded out puppet-foreman_scap_client as the rpm no longer exists in the repos  - line 605
+
+#   #yum -q list installed puppet-foreman_scap_client &>/dev/null && echo "puppet-foreman_scap_client installed" || yum install -y puppet-foreman_scap_client --skip-broken
+
+#   --------------------------------------------------
+
+#   Some reason my satellite can no longer see itself (fwd and rev lookup) - (I am not really sure if this is satellite or my problem so I decided to bullet proof it for everyone regardless by adding)
+
+#   echo $(ifconfig $INTERNAL | grep "inet" | awk -F ' ' '{print $2}' |grep -v f |awk -F . '{print $1"."$2"."$3"."$4}') $(hostname -f)  >>/etc/hosts
+
+#   Which just puts the host entry into /etc/hosts -- line  577
+#
+# 
+#   Automate creation of tftpboot/pxelinux.cfg/default using hammer or API 
+
+
